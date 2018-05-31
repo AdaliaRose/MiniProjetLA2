@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Matieres</title>
+    </h:head>
+    <h:body>
+        <h:form id="matiereForm"> 
+            <p:commandButton value="Retour" action="index.xhtml?faces-redirect=true" />
+            <p:commandButton value="Ajouter" oncomplete="PF('addNewDialog').show()" />
+
+            <p:dataTable var="matiere" value="#{matiereBean.allMatieres}" id="matiere" selection="#{matiereBean.selectedMatiere}" selectionMode="single" rowKey="#{matiere.id}">
+                <p:column headerText="Nom:">
+                    <h:outputText value="#{matiere.nom}" />
+                </p:column>
+            </p:dataTable>
+        </h:form>
+        <p:dialog widgetVar="addNewDialog" modal="true" appendTo="@(body)">
+            <h:form>
+                <p:growl id="growlAdd" showDetail="true" sticky="true" /> 
+
+                <p:panelGrid  columns="2">
+
+                    <p:outputLabel for="nom" value="Nom :"/>
+                    <p:inputText id="nom" required="true" requiredMessage="Entrez un nom de matiere." value="#{matiereBean.newNom}"/> 
+
+                    <p:commandButton value="Ajouter" id="ajouter" action="#{matiereBean.addNewMatiere}" oncomplete="PF('addNewDialog').hide()" styleClass="ui-priority-primary" update="matiereForm" />
+
+                </p:panelGrid>
+            </h:form>
+        </p:dialog>
+    </h:body>
+</html>
